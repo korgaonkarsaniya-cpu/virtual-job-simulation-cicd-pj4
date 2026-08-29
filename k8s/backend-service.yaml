@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: virtual-job-platform
+spec:
+  selector:
+    app: virtual-job-backend
+  ports:
+    - port: 5000
+      targetPort: 5000
+  type: ClusterIP

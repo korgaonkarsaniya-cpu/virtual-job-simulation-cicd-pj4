@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtual Job Simulation Platform</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <p class="eyebrow">DEVOPS DEMO PLATFORM</p>
+      <h1>Virtual Job Simulation Platform</h1>
+      <p class="subtitle">Explore simulated internship roles and the skills they require.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="status-card">
+      <span id="status-dot"></span>
+      <div>
+        <strong>Platform Status</strong>
+        <p id="status">Checking backend health...</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Available Job Simulations</h2>
+      <div id="jobs" class="jobs"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">Docker + Kubernetes DevOps Demonstration</div>
+  </footer>
+
+  <script>
+    async function loadJobs() {
+      try {
+        const health = await fetch("/health");
+        const healthData = await health.json();
+        document.getElementById("status").textContent =
+          healthData.status === "healthy" ? "Backend is healthy" : "Backend needs attention";
+
+        const response = await fetch("/api/jobs");
+        const data = await response.json();
+
+        document.getElementById("jobs").innerHTML = data.jobs.map(job => `
+          <article class="job">
+            <span class="tag">Simulation ${job.id}</span>
+            <h3>${job.title}</h3>
+            <p>Recommended skills:</p>
+            <div class="skills">
+              ${job.skills.map(skill => `<span>${skill}</span>`).join("")}
+            </div>
+          </article>
+        `).join("");
+      } catch (error) {
+        document.getElementById("status").textContent = "Backend unavailable";
+        document.getElementById("status-dot").classList.add("offline");
+        document.getElementById("jobs").innerHTML =
+          "<p>Unable to load simulations. Check the backend service.</p>";
+      }
+    }
+
+    loadJobs();
+  </script>
+</body>
+</html>

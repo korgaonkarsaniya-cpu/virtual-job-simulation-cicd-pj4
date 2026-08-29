@@ -1,0 +1,16 @@
+services:
+  backend:
+    build: ./backend
+    container_name: virtual-job-backend
+    environment:
+      PORT: 5000
+    expose:
+      - "5000"
+
+  frontend:
+    build: ./frontend
+    container_name: virtual-job-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend

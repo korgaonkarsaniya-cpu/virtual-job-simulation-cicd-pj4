@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: virtual-job-frontend
+  namespace: virtual-job-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: virtual-job-frontend
+  template:
+    metadata:
+      labels:
+        app: virtual-job-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: virtual-job-frontend:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "25m"
+              memory: "32Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
