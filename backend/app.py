@@ -21,12 +21,14 @@ JOBS = [
     }
 ]
 
+
 @app.get("/health")
 def health():
     return jsonify({
         "status": "healthy",
         "service": "virtual-job-api"
     })
+
 
 @app.get("/api/jobs")
 def jobs():
@@ -35,11 +37,13 @@ def jobs():
         "jobs": JOBS
     })
 
+
 @app.get("/")
 def root():
     return jsonify({
         "message": "Virtual Job Simulation API is running"
     })
+
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", "5000"))
