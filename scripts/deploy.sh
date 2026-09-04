@@ -124,7 +124,7 @@ echo "Checking backend health endpoint..."
 
 kubectl port-forward \
     -n "${NAMESPACE}" \
-    service/virtual-job-backend 5001:5000 \
+    service/backend 5001:5000 \
     > /tmp/backend-port-forward.log 2>&1 &
 
 PORT_FORWARD_PID=$!
